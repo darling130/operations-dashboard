@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operations Analytics Dashboard | Arrowcosta Technology</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@3.0.0/index.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <h1>🏭 Operations Analytics Dashboard</h1>
+                <p class="subtitle">Industrial Production KPI Monitoring</p>
+            </div>
+            <div class="header-info">
+                <div class="info-item">
+                    <span class="label">Organization:</span>
+                    <span class="value">Arrowcosta Technology</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Period:</span>
+                    <span class="value" id="dataPeriod">Feb - Jul 2026</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Last Updated:</span>
+                    <span class="value" id="lastUpdate">-</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard-main">
+        <!-- KPI Cards Section -->
+        <section class="kpi-section">
+            <div class="kpi-card">
+                <div class="kpi-icon">📊</div>
+                <div class="kpi-content">
+                    <h3>Overall Equipment Effectiveness</h3>
+                    <div class="kpi-value" id="avgOEE">--%</div>
+                    <div class="kpi-target">Target: 85%</div>
+                    <div class="kpi-trend" id="oeeTrend"></div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">⚠️</div>
+                <div class="kpi-content">
+                    <h3>Defect Rate</h3>
+                    <div class="kpi-value" id="avgDefectRate">--%</div>
+                    <div class="kpi-target">Target: ≤ 2%</div>
+                    <div class="kpi-trend" id="defectTrend"></div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">⚡</div>
+                <div class="kpi-content">
+                    <h3>Throughput Efficiency</h3>
+                    <div class="kpi-value" id="avgThroughput">--%</div>
+                    <div class="kpi-target">Target: ≥ 95%</div>
+                    <div class="kpi-trend" id="throughputTrend"></div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">⏱️</div>
+                <div class="kpi-content">
+                    <h3>Total Downtime</h3>
+                    <div class="kpi-value" id="totalDowntime">-- hrs</div>
+                    <div class="kpi-target">Minimize downtime</div>
+                    <div class="kpi-trend" id="downtimeTrend"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="charts-section">
+            <!-- Row 1: Time Series -->
+            <div class="chart-container">
+                <h3 class="chart-title">OEE Trend Over Time</h3>
+                <canvas id="oeeTrendChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Production Volume by Line</h3>
+                <canvas id="productionByLineChart"></canvas>
+            </div>
+
+            <!-- Row 2: Comparative Analysis -->
+            <div class="chart-container">
+                <h3 class="chart-title">Performance by Shift</h3>
+                <canvas id="shiftPerformanceChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Downtime vs Defects Correlation</h3>
+                <canvas id="correlationChart"></canvas>
+            </div>
+
+            <!-- Row 3: Distribution -->
+            <div class="chart-container">
+                <h3 class="chart-title">Defect Rate Distribution</h3>
+                <canvas id="defectDistributionChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Monthly Production Trends</h3>
+                <canvas id="monthlyTrendChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Insights Section -->
+        <section class="insights-section">
+            <h2 class="section-title">📋 Key Insights & Recommendations</h2>
+            <div id="insightsContainer" class="insights-container">
+                <!-- Insights will be dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- Data Table Section -->
+        <section class="table-section">
+            <h2 class="section-title">📈 Production Line Performance Summary</h2>
+            <div class="table-container">
+                <table id="performanceTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Production Line</th>
+                            <th>Total Production</th>
+                            <th>Avg OEE (%)</th>
+                            <th>Defect Rate (%)</th>
+                            <th>Downtime (hrs)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be dynamically loaded -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <p>© 2026 Arrowcosta Technology Private Limited | Operations Analytics Dashboard</p>
+        <p>Developed by: Gnanachandu Kalla | Operations Data Analyst Intern</p>
+    </footer>
+
+    <!-- Load Scripts -->
+    <script src="chart-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
