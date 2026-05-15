@@ -37,23 +37,29 @@ class DataValidator:
         return result
 
     def check_data_types(self) -> Dict:
-        """Verify data types match expectations"""
+        """Verify data types match expectations.
+
+        Pandas dtype string representations vary by version and by the
+        input data source. For example, datetimes may be stored as
+        ``datetime64[ns]`` or ``datetime64[us]``, and text data can appear
+        as ``object``, ``string``, or ``str``. Use pandas' dtype helpers so
+        validation focuses on semantic types instead of exact string labels.
+        """
         expected_types = {
-            'date': 'datetime64[ns]',
-            'shift': 'object',
-            'production_line': 'object',
-            'units_produced': ['int64', 'int32'],
-            'planned_production': ['int64', 'int32'],
-            'defect_count': ['int64', 'int32'],
-            'downtime_minutes': ['int64', 'int32']
+            'date': ('datetime', pd.api.types.is_datetime64_any_dtype),
+            'shift': ('string/object', pd.api.types.is_string_dtype),
+            'production_line': ('string/object', pd.api.types.is_string_dtype),
+            'units_produced': ('integer', pd.api.types.is_integer_dtype),
+            'planned_production': ('integer', pd.api.types.is_integer_dtype),
+            'defect_count': ('integer', pd.api.types.is_integer_dtype),
+            'downtime_minutes': ('integer', pd.api.types.is_integer_dtype)
         }
 
         type_issues = []
-        for col, expected in expected_types.items():
+        for col, (expected, validator) in expected_types.items():
             if col in self.data.columns:
                 actual_type = str(self.data[col].dtype)
-                expected_list = [expected] if isinstance(expected, str) else expected
-                if actual_type not in expected_list:
+                if not validator(self.data[col]):
                     type_issues.append({
                         'column': col,
                         'expected': expected,
