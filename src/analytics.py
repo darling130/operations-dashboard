@@ -17,7 +17,29 @@ logger = logging.getLogger(__name__)
 class OperationsAnalytics:
     """Performs operations analytics and KPI calculations"""
 
+    REQUIRED_COLUMNS = {
+        'date',
+        'shift',
+        'production_line',
+        'units_produced',
+        'planned_production',
+        'defect_count',
+        'downtime_minutes',
+        'oee',
+        'defect_rate',
+        'throughput_efficiency',
+        'operator_id'
+    }
+
     def __init__(self, data: pd.DataFrame):
+        if data.empty:
+            raise ValueError('OperationsAnalytics requires at least one record')
+
+        missing_columns = self.REQUIRED_COLUMNS.difference(data.columns)
+        if missing_columns:
+            missing = ', '.join(sorted(missing_columns))
+            raise ValueError(f'OperationsAnalytics missing required columns: {missing}')
+
         self.data = data.copy()
         self.kpis = {}
 
